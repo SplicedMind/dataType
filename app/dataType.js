@@ -1,63 +1,64 @@
 module.exports = {
  
-   getPrime: function(num) {
-      var prime = [];
-      var iterate = 1;
-      var j;      
-      //Test if the argument is a number
-      if(typeof(num) === 'number')
-      {    
-         //Generate an array of numbers from 2 to num if num is greater or equal to 2  
-         if (num >= 2)
-         {
-            //Handles the special case when num is 2
-            if(num == 2)
+   dataTypes: function(arg) {
+     switch(typeof(arg))
+     {
+      //Checks if argument is a string
+      case 'string':
+         return arg.length;
+         break;
+      //Check if argument is an object
+      case 'object':
+         //Check if the object is an array
+         if(arg instanceof(Array))
+         {  
+            //Check if the arry lenght is greater than or equal to 3
+            if(arg.length >= 3)
             {
-               prime.push(2);
+               return arg[2];
             }
-            //Generate an array of numbers from 2 to num while ommitting all even numbers
-            else if(num >= 3)
+            //Return undefined if the array lenght is less than 3
+            else
             {
-               prime.push(2);            
-               for(var i = 0; i < num -2; i += 2)
-               {
-                  prime.push(3 + i);
-               }
-            }
-            //limit set the upper bound to the value used in the first iteration 
-            var limit = Math.sqrt(num);
-            var primelength = prime.length;
-            //First iteration to select the array element used to divide other elements in the 
-            //second iteration in other to remove its multiples from the array
-            while(iterate < primelength - 1)
-            {
-               //Test if selected array element's value is less than or equal to limit(upper bound)
-               if(prime[iterate] <= limit)
-               {
-                  j = 1 + iterate;
-                  //Second iteration to remove the non prime numbers from the array
-                  while(j < primelength)
-                  {
-                     //Test for the prime property
-                     if(prime[j] % prime[iterate] == 0)
-                     {
-                        //Removal of non prime numbers from the array
-                       prime.splice(j,1);
-                     }   
-                         j += 1;
-                  }
-               }
-               //Prime lenght reset to the new prime.length after the removal of non prime numbers in each iteration
-               primelength = prime.length;
-               iterate += 1;
-            }
+               return undefined;
+            }           
          }
-         return prime;
-      }
-      //Runs if num is not a number
-      else
-      {
-         return 'Not a valid argument';
-      }
+         //Check if the object is null
+         else if(isNaN(1 + arg) === false)
+         {
+            return 'no value';
+         }
+         break;
+      //Check if the argument is undefined
+      case 'undefined':
+         return 'no value';
+         break;
+      //Check if the argument is boolean
+      case 'boolean':
+         return arg;
+         break;
+      //Check if the argument is a number
+      case 'number':
+         //Check if the number is greater than 100 
+         if(arg > 100)
+         {
+            return 'more than 100';
+         }
+         //Check if the number is less than 100
+         else if (arg < 100)
+         {
+            return 'less than 100';
+         }
+         //Returns equal to 100 if the first two checks failed
+         else
+         {
+            return 'equal to 100';
+         }
+         break;
+      //Check if the argument is a function
+      case 'function':
+         return arg(true);
+         break;
+     }
    }
 }
