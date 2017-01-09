@@ -2,53 +2,89 @@
   'use strict';
 
   var jasmine = require('jasmine');
+  var myApp = require('../app/dataType.js');
 
-  var myApp = require('../app/getPrime.js');
+  describe("Data types tests ", function() {
 
-  describe("Determine the prime numbers from 0 to the input value: ", function() {
+  describe("Case for some falsy values", function() {
 
-    describe("Case for valid arguments", function() {
+    it("should return 'no value' for null", function() {
+      expect(myApp.dataTypes(null)).toEqual('no value');
+    });
 
-      it("should return [2,3,5,7] for an input of 9", function() {
-        expect(myApp.getPrime(9)).toEqual([2,3,5,7]);
-      });
-
-      it("should return [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47] for an input 50", function() {
-        expect(myApp.getPrime(50)).toEqual([2,3,5,7,11,13,17,19,23,29,31,37,41,43,47]);
-      });
-
-      it("should return [] for an input of 0", function() {
-        expect(myApp.getPrime(0)).toEqual([]);
-      });
-
-      it("should return [] for an input of 1", function() {
-        expect(myApp.getPrime(1)).toEqual([]);
-      });
-
-      it("should return [2] for an input of 2", function() {
-        expect(myApp.getPrime(2)).toEqual([2]);
-      });
-
-      it("should return `Not a valid argument` for an input of `11o`", function() {
-        expect(myApp.getPrime('11o')).toEqual('Not a valid argument');
-      });
-
-      it("should not return 1777 for an input of 10000", function() {
-        expect(myApp.getPrime(10000)).toContain(1777);
-      });
-
-      it("should not contain 49 for an input of 100", function() {
-        expect(myApp.getPrime(100)).not.toContain(49);
-      });
-
-      it("should contain 2053 for an input of 10000", function() {
-        expect(myApp.getPrime(10000)).toContain(2053);
-      });
-
-      it("should contain 7411 for an input of 10000", function() {
-        expect(myApp.getPrime(10000)).toContain(7411);
-      });
-
+    it("should return 'no value' for undefined", function() {
+      expect(myApp.dataTypes(undefined)).toEqual('no value');
     });
   });
+
+  describe("Case for booleans", function() {
+
+    it("should return true for `true`", function() {
+      expect(myApp.dataTypes(true)).toBe(true);
+    });
+
+    it("should return false for `false`", function() {
+      expect(myApp.dataTypes(false)).toBe(false);
+    });
+  });
+
+  describe("Case for Numbers", function() {
+
+    it("should return 'less than 100' for 44", function() {
+      expect(myApp.dataTypes(44)).toBe('less than 100');
+    });
+
+    it("should return 'more than 100' for 144", function() {
+      expect(myApp.dataTypes(144)).toBe('more than 100');
+    });
+
+    it("should return 'equal to 100' for 100", function() {
+      expect(myApp.dataTypes(100)).toBe('equal to 100');
+    });
+  });
+
+  describe("Case for Strings", function() {
+
+    it("should return the length of `tergiversate`", function() {
+      expect(myApp.dataTypes('tergiversate')).toBe(12);
+    });
+
+    it("should return the length of an empty string", function() {
+      expect(myApp.dataTypes('')).toBe(0);
+    });
+
+    it("should return the length of `555`", function() {
+      expect(myApp.dataTypes('555')).toBe(3);
+    });
+  });
+
+  describe("Case for arrays", function() {
+
+    it("should return `2` for `[0, 1, 2]`", function() {
+      expect(myApp.dataTypes([0, 1, 2])).toBe(2);
+    });
+
+    it("should return `undefined` for `[]`", function() {
+      expect(myApp.dataTypes([])).not.toBeDefined();
+    });
+
+    it("should return `undefined` for `[4, 9]`", function() {
+      expect(myApp.dataTypes([4, 9])).not.toBeDefined();
+    });
+  });
+
+  describe("Case for functions", function() {
+
+    it("should call the `callback` function with argument true, and return `called callback`", function() {
+      var callback = function(arg) {
+        expect(arg).toBeTruthy();
+        if(arg === true) {
+          return 'called callback';
+        }
+      };
+      expect(myApp.dataTypes(callback)).toBe('called callback');
+    });
+  });
+
+});
 })();
