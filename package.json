@@ -1,5 +1,5 @@
 {
-  "name": "getPrime",
+  "name": "dataType",
   "version": "1.0.0",
   "description": "Basic JavaScript project to determine the data type of the input value",
   "main": "app/dataType.js",
@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "mocha tests/tests.js"
+    "test": "jasmine tests/tests.js"
   },
   "repository": {
     "type": "git",
